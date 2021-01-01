@@ -1,5 +1,6 @@
 {
     "name": "Jetpack cat: the search for Rocket boot dog",
+    "version": "0.0.1",
     "description": "",
     "dependencies": {
         "device": "*",
