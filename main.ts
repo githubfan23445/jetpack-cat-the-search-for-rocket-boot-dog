@@ -106,7 +106,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.redbox, function (sprite, otherS
     red_move_block.x += 16
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, location) {
-    statusbar.value += -1
+    statusbar.value += -1.2
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
     mySprite2.follow(mySprite)
