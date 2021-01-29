@@ -20,7 +20,8 @@
         "color-coded-tilemap": "*",
         "tilemaps": "github:microsoft/pxt-tilemaps#v1.10.0",
         "animation": "*",
-        "seesaw": "github:adafruit/pxt-seesaw#v0.0.19"
+        "seesaw": "github:adafruit/pxt-seesaw#v0.0.19",
+        "ice boy the icy world": "pkg:ice boy the icy world.json"
     },
     "files": [
         "main.blocks",
@@ -29,7 +30,8 @@
         "tilemap.g.jres",
         "tilemap.g.ts",
         "images.g.jres",
-        "images.g.ts"
+        "images.g.ts",
+        "ice boy the icy world.json"
     ],
     "testFiles": [
         "test.ts"

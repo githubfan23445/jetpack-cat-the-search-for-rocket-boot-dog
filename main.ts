@@ -1,3 +1,8 @@
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace SpriteKind {
     export const tree = SpriteKind.create()
     export const box = SpriteKind.create()
@@ -42,6 +47,48 @@ scene.onOverlapTile(SpriteKind.bluebox, assets.tile`tile4`, function (sprite, lo
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile3`, function (sprite, location) {
     game.over(true, effects.smiles)
 })
+function animate_idle () {
+    main_idle_left = animation.createAnimation(ActionKind.Walking, 100)
+    animation.attachAnimation(mySprite, main_idle_left)
+    main_idle_left.addAnimationFrame(img`
+        . . . . . . . . . . . . . . . . 
+        . e e e . . . . e e e . . . . . 
+        . c d d c . . c d d c . . . . . 
+        . c b d d f f d d b c . . . . . 
+        . c 3 b d d b d b 3 c . . . . . 
+        . f b 3 d d d d 3 b f . . . . . 
+        . e d d d d d d d d e f f f . . 
+        . e d f d d d d f d f f f 2 f . 
+        . f d d f d d f d f f 5 2 5 f . 
+        . f b d d b b d d f f f f 2 f . 
+        . . f 2 2 2 2 2 2 b f f f f f . 
+        . . f b d d d d d d b b d b f . 
+        . . f d d d d d b d d f f f . . 
+        . . f d f f f d f f d f . . . . 
+        . . f f . . f f . . f f . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+    main_idle_right = animation.createAnimation(ActionKind.Walking, 100)
+    animation.attachAnimation(mySprite, main_idle_right)
+    main_idle_right.addAnimationFrame(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . e e e . . . . e e e . . 
+        . . . . c d d c . . c d d c . . 
+        . . . . c b d d f f d d b c . . 
+        . . . . c 3 b d b d d b 3 c . . 
+        . . . . f b 3 d d d d 3 b f . . 
+        . f f f e d d d d d d d d e . . 
+        f 2 f f f d f d d d d f d e . . 
+        f 5 2 5 f f d f d d f d d f . . 
+        f 2 f f f f d d b b d d b f . . 
+        f f f f f b 2 2 2 2 2 2 f . . . 
+        f b d b b d d d d d d b f . . . 
+        . f f f d d b d d d d d f . . . 
+        . . . f d f f d f f f d f . . . 
+        . . . f f . . f f . . f f . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+}
 statusbars.onZero(StatusBarKind.Health, function (status) {
     game.over(false, effects.dissolve)
     game.splash("game over")
@@ -67,6 +114,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherS
 sprites.onOverlap(SpriteKind.Player, SpriteKind.bluebox, function (sprite, otherSprite) {
     blue_move_box.x += 16
 })
+let hero_facing_left = false
+let main_idle_right: animation.Animation = null
+let main_idle_left: animation.Animation = null
 let projectile: Sprite = null
 let blue_move_box: Sprite = null
 let move_block: Sprite = null
@@ -353,3 +403,17 @@ blue_move_box.ay = 600
 tiles.placeOnRandomTile(move_block, assets.tile`tiles.util.object1`)
 tiles.placeOnRandomTile(blue_move_box, assets.tile`tiles.util.object3`)
 tiles.placeOnRandomTile(red_move_block, assets.tile`tiles.util.object9`)
+game.onUpdate(function () {
+    if (mySprite.vx < 0) {
+        hero_facing_left = true
+    } else if (mySprite.vx > 0) {
+        hero_facing_left = false
+    }
+    if (controller.down.isPressed()) {
+        if (hero_facing_left) {
+            animation.setAction(mySprite, ActionKind.Walking)
+        } else {
+            animation.setAction(mySprite, ActionKind.Walking)
+        }
+    }
+})
